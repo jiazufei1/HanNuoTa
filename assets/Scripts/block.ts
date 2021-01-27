@@ -13,6 +13,7 @@ export default class NewClass extends cc.Component {
     @property(cc.SpriteAtlas)
     colorAtlas: cc.SpriteAtlas = null;
     startPos: cc.Vec3;
+    canMove: boolean;
 
     onLoad(){
         this.node.on('touchstart',this.onTouchStart,this)
@@ -32,15 +33,22 @@ export default class NewClass extends cc.Component {
     }
    
     onTouchStart(e){
+        this.canMove = true
         this.startPos = this.node.position
+        let arr = window.game.blockNodeArr[this.node.baseIndex]
+        if (this.node.blockIndex != arr[arr.length-1].blockIndex){
+            this.canMove = false
+        }
     }
     onTouchMove(e){
+        if(!this.canMove)return
         let delta = e.getDelta()
         this.node.x += delta.x
         this.node.y += delta.y
     }
 
     onTouchEnd(e){
+        if(!this.canMove)return
         let canPlace = window.game.placeBlock(this.node)
         if (!canPlace){
             this.node.position = this.startPos
