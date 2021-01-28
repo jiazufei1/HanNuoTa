@@ -44,7 +44,7 @@ export default class NewClass extends cc.Component {
                 arr[j].destroy()
             }
         }
-        // this.blockNodeArr = [[],[],[]]
+        this.blockNodeArr = [[],[],[]]
 
         for (let i = 0; i<num; i++){
             let blockNode = cc.instantiate(this.blockPrefab)
